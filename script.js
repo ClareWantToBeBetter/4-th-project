@@ -1,3 +1,11 @@
+const form = document.getElementById('form');
+const password1El = document.getElementById('password1');
+const password2El = document.getElementById('password2');
+const messageContainer = document.querySelector('.message-container');
+const message = document.getElementById('message');
+
+let isValid = false;
+let passwordsMatch = false;
 function validateForm() {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
