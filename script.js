@@ -6,25 +6,53 @@ const message = document.getElementById('message');
 
 let isValid = false;
 let passwordsMatch = false;
+
 function validateForm() {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const password2 = document.getElementById('password2').value;
-
-    if(username === '' || username.length < 3) {
-        alert('Username must be at least 3 characters long.');
+    isValid = form.checkValidity();
+    if (!isValid) {
+        message.textContent = 'Please fill out all fields.';
+        message.style.color = 'red';
+        messageContainer.style.borderColor = 'red';
+        return;
     }
-
-    const emailPattern = /^[azAZ09]+@[azAZ09]+.[azAZ]{2,6}$/;
-    if(!emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
+    if (password1El.value === password2El.value) {
+        passwordsMatch = true;
+        password1El.style.borderColor = 'green';
+        password2El.style.borderColor = 'green';
+    } else {
+        passwordsMatch = false;
+        message.textContent = 'Make sure passwords match.';
+        message.style.color = 'red';
+        messageContainer.style.borderColor = 'red';
+        password1El.style.borderColor = 'red';
+        password2El.style.borderColor = 'red';
+        return;
     }
-
-    if(password === '' || password.length < 8) {
-        alert("Password must be at least 8 characters long.");
+    if (isValid && passwordsMatch) {
+        message.textContent = 'Successfully Registered!';
+        message.style.color = 'green';
+        messageContainer.style.borderColor = 'green';
     }
-    // if(password ===password2){
-    //     alert("Password must match");
-    // }
 }
+
+function storeFormData() {
+    const user = {
+        name: form.username.value,
+        email: form.email.value,
+        password: form.password.value
+    };
+    console.log(user);
+}
+
+function processFormData(e) {
+    e.preventDefault();
+    // Validate Form
+    validateForm();
+    // Submit Form if Valid
+    if (isValid && passwordsMatch) {
+        storeFormData();
+    }
+}
+
+// Event Listener
+form.addEventListener('submit', processFormData);
